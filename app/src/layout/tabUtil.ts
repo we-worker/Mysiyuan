@@ -192,7 +192,7 @@ export const newCenterEmptyTab = (app: App) => {
         <svg class="b3-list-item__graphic"><use xlink:href="#iconFilesRoot"></use></svg>
         <span>${window.siyuan.languages.newNotebook}</span>
     </div>
-    <div class="b3-list-item${isIPad() ? " fn__none" : ""}" id="editorEmptyHelp">
+    <div class="b3-list-item${(isIPad() || window.siyuan.config.readonly) ? " fn__none" : ""}" id="editorEmptyHelp">
         <svg class="b3-list-item__graphic"><use xlink:href="#iconHelp"></use></svg>
         <span>${window.siyuan.languages.userGuide}</span>
     </div>
@@ -257,7 +257,9 @@ export const copyTab = (app: App, tab: Tab) => {
                     app,
                     tab: newTab,
                     blockId: tab.model.editor.protyle.block.id,
-                    rootId: tab.model.editor.protyle.block.rootID
+                    rootId: tab.model.editor.protyle.block.rootID,
+                    // https://github.com/siyuan-note/siyuan/issues/12150
+                    action: tab.model.editor.protyle.block.action,
                 });
             } else if (tab.model instanceof Asset) {
                 model = new Asset({

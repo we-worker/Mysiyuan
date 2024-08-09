@@ -24,7 +24,6 @@ import (
 	"github.com/88250/gulu"
 	"github.com/88250/lute/ast"
 	"github.com/88250/lute/html"
-	"github.com/88250/lute/lex"
 	"github.com/siyuan-note/siyuan/kernel/av"
 	"github.com/siyuan-note/siyuan/kernel/cache"
 	"github.com/siyuan-note/siyuan/kernel/filesys"
@@ -198,7 +197,7 @@ func nodeStaticContent(node *ast.Node, excludeTypes []string, includeTextMarkATi
 			var linkDestStr, ocrText string
 			if nil != linkDest {
 				linkDestStr = linkDest.TokensStr()
-				ocrText = util.GetAssetText(linkDestStr, false)
+				ocrText = util.GetAssetText(linkDestStr)
 			}
 
 			linkText := n.ChildByType(ast.NodeLinkText)
@@ -261,8 +260,6 @@ func nodeStaticContent(node *ast.Node, excludeTypes []string, includeTextMarkATi
 					buf.WriteString(" " + html.UnescapeHTMLStr(n.TextMarkAHref))
 				}
 			}
-		case ast.NodeBackslash:
-			buf.WriteByte(lex.ItemBackslash)
 		case ast.NodeBackslashContent:
 			buf.Write(n.Tokens)
 		case ast.NodeAudio, ast.NodeVideo:
